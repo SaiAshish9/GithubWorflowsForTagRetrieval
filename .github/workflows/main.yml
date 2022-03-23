@@ -1,4 +1,4 @@
-name: RC CI
+name: CI
 
 on:
   create:
