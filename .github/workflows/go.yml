@@ -23,3 +23,11 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Make build file for various oses
+      run: |
+        raw=$(git branch -r --contains ${{ github.ref }})
+        branch=${raw/origin\/}
+        env GOOS=linux go build -ldflags="-s -w -X main.GitCommit=$GIT_COMMIT -X 'main.GitRelease=${GITHUB_REF##*/}' -X main.GitBranch=${branch//[[:space:]]/}" -o rc/lrc_linux .
+        env GOOS=darwin go build -ldflags="-s -w -X main.GitCommit=$GIT_COMMIT -X 'main.GitRelease=${GITHUB_REF##*/}' -X main.GitBranch=${branch//[[:space:]]/}" -o rc/lrc_macos .
+        env GOOS=windows go build -ldflags="-s -w -X main.GitCommit=$GIT_COMMIT -X 'main.GitRelease=${GITHUB_REF##*/}' -X main.GitBranch=${branch//[[:space:]]/}" -o rc/lrc_windows.exe .
