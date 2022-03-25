@@ -27,5 +27,5 @@ jobs:
           env GOOS=darwin go build -ldflags="-s -w -X main.GitCommit=$GIT_COMMIT -X 'main.GitRelease=${GITHUB_REF##*/}' -X main.GitBranch=${branch//[[:space:]]/}" -o rc/lrc_macos .
           env GOOS=windows go build -ldflags="-s -w -X main.GitCommit=$GIT_COMMIT -X 'main.GitRelease=${GITHUB_REF##*/}' -X main.GitBranch=${branch//[[:space:]]/}" -o rc/lrc_windows.exe .
 
-      - name: Test
+      - name: Run
         run: go run main.go
